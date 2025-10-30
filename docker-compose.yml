@@ -11,7 +11,7 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
     ports:
       # Expose port on the host (optional, but good for debugging)
-      - "8089:3307"
+      - "8089:3306"
     volumes:
       # Persist data outside the container
       - db-data:/var/lib/mysql
@@ -28,7 +28,7 @@ services:
       - "8080:8080"
     environment:
       # Connection details for Spring Boot to find the database
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:8089/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
     depends_on:
