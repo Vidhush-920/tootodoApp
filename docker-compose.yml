@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # 1. MySQL Database Service
+  mysql-db:
+    image: mysql:8.0
+    container_name: todo-mysql-db
+    environment:
+      # Database access details for Spring Boot
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: tootodo
+    ports:
+      # Expose port 8088 on the host (optional, but good for debugging)
+      - "8088:8088"
+    volumes:
+      # Persist data outside the container
+      - db-data:/var/lib/mysql
+      # Execute the setup script on first run
+      - ./tootodo.sql:/docker-entrypoint-initdb.d/tootodo.sql
+
+  # 2. Spring Boot Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: todo-backend
+    ports:
+      - "8080:8080"
+    environment:
+      # Connection details for Spring Boot to find the database
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:8088/tootodo?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      # Ensure database is running before starting the backend
+      - mysql-db
+    # Wait for MySQL to be fully ready before starting the backend (essential for boot)
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "mysql-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 3. React Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: todo-frontend
+    ports:
+      - "3000:80" # Map host port 3000 to container port 80 (Nginx default)
+    depends_on:
+      - backend
+
+volumes:
+  db-data:
