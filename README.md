@@ -7,6 +7,24 @@ Hey there! Welcome to the To-Do Application project. This is a full-stack effort
 We've even added some cool fade-in and fade-out animations to make using the task list feel super smooth.
 
 ## 🚀 Let's Get It Running!
+
+If you like to run this application using **Docker**,
+1. Make sure you are in the root directory of your project (where the `docker-compose.yml` and `.env` files are located).
+2. Run the following command. The `--build` flag ensures that Docker first builds the necessary images (for your frontend and backend) before starting the services.
+   ```bash
+   docker-compose up --build
+   ```
+   This command will:
+    - **Start the `mysql-db` container:** It uses the environment variables from your `.env` file and executes the `tootodo.sql` script to set up your database.
+    - **Start the `backend` container:** It waits for the database to start, then runs your Spring Boot application, connecting it to the database using the service name (`mysql-db`).
+    - **Start the `frontend` container:** It waits for the backend to start, then serves the React application using Nginx.
+
+3. You will see a lot of output as Docker Compose starts all three services. Wait until you see confirmation that:
+    - The MySQL database is ready (often indicated by a "ready for connections" message).
+    - The Spring Boot application is running and listening on port 8080.
+    - The Nginx server in the React container is running and serving on port 3000.
+
+Else if you have not installed Docker, and you clike to run this project on your local machine,
 Here's the quick and easy guide to getting this project set up on your machine.
 
 ### What You'll Need
