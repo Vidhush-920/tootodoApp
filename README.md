@@ -9,7 +9,7 @@ We've even added some cool fade-in and fade-out animations to make using the tas
 ## 🚀 Let's Get It Running!
 
 If you like to run this application using **Docker**,
-1. Make sure you are in the root directory of your project (where the `docker-compose.yml` and `.env` files are located).
+1. Make sure you are in the root directory of your project (where the `docker-compose.yml` and `.env` files are located; you should create an `.env` file.).
 2. Run the following command. The `--build` flag ensures that Docker first builds the necessary images (for your frontend and backend) before starting the services.
    ```bash
    docker-compose up --build
