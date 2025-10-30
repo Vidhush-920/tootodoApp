@@ -1,0 +1,59 @@
+.App { @apply min-h-screen bg-gray-50 p-4 font-sans; }
+
+.task-section {
+  @apply bg-white shadow-2xl rounded-3xl w-full flex flex-row min-h-[700px];
+}
+
+.task-section .taskform {
+  @apply w-2/5 min-w-[400px] p-6 border-b border-r-4 border-r-gray-300;
+}
+
+.task-section .taskform form { @apply relative space-y-6; }
+
+.task-section .taskform form .form-group label {
+  @apply block text-gray-700 font-medium mb-2;
+}
+
+.task-section .taskform form .form-group input,
+.task-section .taskform form .form-group textarea {
+  @apply focus:outline-none focus:ring-2;
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150;
+}
+
+.task-section .taskform form .add-task {
+  @apply block absolute right-0 px-16 py-2 rounded-lg transition duration-300;
+  @apply text-lg font-semibold shadow-md;
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.task-section .taskform form .add-task.disabled {
+  @apply bg-blue-300 cursor-not-allowed;
+}
+
+.task-section .tasklist {
+  @apply flex-1 p-6 overflow-y-auto;
+}
+
+/*max-width: 1024px*/
+@media (max-width: 1024px) {
+  .task-section { @apply flex-col max-w-[700px] mx-auto; }
+  .task-section .taskform { @apply w-full border-r-0 border-b-4; }
+  .task-section .taskform form { @apply relative pb-16; }
+  .task-section .taskform form .add-task { @apply absolute right-0; }
+  .task-section .tasklist { @apply w-full; }
+}
+
+/*min-width: 640px*/
+@screen sm {
+  .App { @apply p-8; }
+  .task-section .taskform { @apply p-10; }
+  .task-section .taskform h2 {  @apply text-2xl; }
+  .task-section .tasklist { @apply p-10; }
+}
+
+/*max-width: 640px*/
+@media (max-width: 640px) {
+  .App { @apply p-4; }
+  .task-section .taskform form { @apply pb-20; }
+  .task-section .taskform form .add-task { @apply px-8 py-2 text-base; }
+}
